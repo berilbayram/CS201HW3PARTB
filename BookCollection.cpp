@@ -7,15 +7,14 @@
 
 
 BookCollection::BookCollection(){
-
+    head = nullptr;
+    genreCount = 0;
 }
 
 BookCollection::~BookCollection(){
-    GenreNode* temp;
-    for(GenreNode* current = head; current != nullptr; current = current ->next){
-        temp = current;
-        removeGenre(current->g.getGenreName());
-        current = temp;
+    int k = genreCount;
+    for(int i = 0; i < k; i++){
+        removeGenre(head->g.getGenreName());
     }
     genreCount = 0;
 }
@@ -92,7 +91,7 @@ void BookCollection::BookCollection::removeAuthor(std::string genreName, std::st
 void BookCollection::BookCollection::addAuthor(std::string genreName, std::string bookName, int authorID, std::string authorName) {
     GenreNode* temp = findGenre(genreName);
     if(temp != nullptr){
-        temp->g.addAuthor(authorID,bookName, authorName);
+        temp->g.addAuthor(authorID,authorName, bookName);
     } else{
         cout<<"Genre does not exist"<<endl;
     }
@@ -103,8 +102,7 @@ void BookCollection::BookCollection:: displayAllGenres() const {
         cout << "--EMPTY--" << endl;
     } else {
         for (GenreNode *current = head; current != nullptr; current = current->next) {
-            cout << "Genre: " << current->g.getGenreName() << endl;
-            current->g.displayGenre();
+            cout << current->g.getGenreName() << endl;
         }
     }
 }
@@ -120,7 +118,7 @@ void BookCollection::BookCollection::removeGenre(std::string genreName) {
         } else {
             for (GenreNode *current = head; current != nullptr; current = current->next) {
                 if (current->g.getGenreName() == genreName) {
-                    return;
+                    break;
                 }
                 index++;
             }
@@ -136,8 +134,9 @@ void BookCollection::BookCollection::removeGenre(std::string genreName) {
         }
         temp->next = nullptr;
         delete temp;
+    } else {
+        cout << "This genre does not exist!" << endl;
     }
-    cout << "This genre does not exist!" << endl;
 }
 
 BookCollection:: GenreNode* BookCollection::findGenre(string genreName) {
@@ -147,4 +146,47 @@ BookCollection:: GenreNode* BookCollection::findGenre(string genreName) {
         }
     }
     return nullptr;
+}
+
+void BookCollection::displayAuthor(int authorID) {
+    cout << authorID << ", " << findAuthorById(authorID) << endl;
+    for (GenreNode* current = head ; current != nullptr ; current = current->next) {
+        current->g.displayBooks(authorID);
+    }
+
+}
+
+void BookCollection::addGenre(std::string genreName) {
+    GenreNode* temp = nullptr;
+    temp = findGenre(genreName);
+    if (temp == nullptr){
+        temp = new GenreNode;
+        temp->g.setGenreName(genreName);
+        temp->next = head;
+        head = temp;
+        genreCount++;
+    } else {
+        cout << "ERROR: This genre("<< genreName <<") exists!" << endl;
+    }
+}
+
+void BookCollection::displayGenre(string genreName) {
+    cout << genreName << endl;
+    for (GenreNode* current = head; current != nullptr; current = current->next ){
+        if( current->g.getGenreName() == genreName ){
+            current->g.displayGenre();
+            return;
+        }
+    }
+    cout << "--EMPTY--"<< endl;
+}
+
+string BookCollection::findAuthorById(int authorID){
+    string authorName = "";
+    for(GenreNode* current = head; current != nullptr; current = current->next){
+        authorName = current->g.findAuthorById(authorID);
+        if(authorName != "")
+            return authorName;
+    }
+    return authorName;
 }

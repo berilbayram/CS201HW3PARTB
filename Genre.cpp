@@ -13,10 +13,10 @@ Genre::Genre(const string name){
 }
 
 Genre::~Genre(){
-    for(int i = bookCount; i != 0; i--){
+    int k = bookCount;
+    for(int i = k; i != 0; i--){
         removeBook(head->b.getName());
     }
-    bookCount = 0;
 }
 
 void Genre::setGenreName(const string gName) {
@@ -76,16 +76,16 @@ Genre::Genre(const Genre &genreToCopy) {
 
 Genre:: BookNode* Genre::findBook(const string name) {
     for(BookNode* current = head; current != nullptr; current = current->next){
-        if (current->b.getName() == name || toUpperBookName(current->b.getName()) == toUpperBookName(genreName)){
+        if (current->b.getName() == name || toUpperBookName(current->b.getName()) == toUpperBookName(name)){
             return current;
         }
     }
     return nullptr;
 }
 
-bool Genre::addBook(const std::string bName) {
-    BookNode* temp;
-    temp = findBook(genreName);
+bool Genre::addBook(const string bName) {
+    BookNode* temp = nullptr;
+    temp = findBook(bName);
     if (temp == nullptr){
         temp = new BookNode;
         temp->b.setName(bName);
@@ -94,12 +94,12 @@ bool Genre::addBook(const std::string bName) {
         bookCount++;
         return true;
     }
-    cout << "ERROR: This genre("<< genreName <<") exists!" << endl;
+    cout << "ERROR: This book("<< bName <<") exists!" << endl;
     return false;
 }
 
 bool Genre::removeBook(const std::string bName) {
-    BookNode* temp = findBook(genreName);
+    BookNode* temp = findBook(bName);
     int index = 0;
     if(temp != nullptr) {
         if (temp == head) {
@@ -108,8 +108,8 @@ bool Genre::removeBook(const std::string bName) {
             bookCount--;
         } else {
             for (BookNode *current = head; current != nullptr; current = current->next) {
-                if (current->b.getName() == genreName) {
-                    return index;
+                if (current->b.getName() == bName) {
+                    break;
                 }
                 index++;
             }
@@ -176,3 +176,23 @@ void Genre::displayGenre() {
         }
     }
 }
+
+void Genre::displayBooks(int authorId) const {
+    cout << genreName << endl;
+    for(BookNode* current = head; current != nullptr; current = current->next){
+        if(!current->b.hasAuthor(authorId).empty() ){
+            cout << "\t" << current->b.getName() << endl;
+        }
+    }
+}
+
+string Genre::findAuthorById(int authorID) const {
+    string authorName;
+    for(BookNode* current = head; current != nullptr; current = current->next){
+        authorName = current->b.findAuthorById(authorID);
+        if(authorName != "")
+            return authorName;
+    }
+    return "";
+}
+

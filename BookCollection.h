@@ -24,6 +24,7 @@ public:
     void removeAuthor(string genreName, string bookName, int authorID);
     void displayGenre(string genreName);
     void displayAuthor(int authorID);
+    string findAuthorById(int authorID);
 private:
     struct GenreNode {
         Genre g;

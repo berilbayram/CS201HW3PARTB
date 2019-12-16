@@ -16,6 +16,8 @@ public:
     bool addAuthor(const int id, const string name);
     bool removeAuthor (const int id);
     void displayAuthors() const;
+    string hasAuthor(int id) const;
+    string findAuthorById(int authorId);
 private:
     struct AuthorNode {
         Author a;

@@ -22,6 +22,8 @@ public:
     bool removeAuthor(const int aId, const string bookName);
     void displayGenre();
     int getBookCount() const;
+    void displayBooks(int authorId) const;
+    string findAuthorById(int authorID) const;
 private:
     struct BookNode {
         Book b;

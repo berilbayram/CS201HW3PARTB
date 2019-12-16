@@ -12,16 +12,14 @@ Book::Book(){
 Book::Book(const string name){
     this->name = name;
     authorCount = 0;
+    head = nullptr;
 }
 
 Book::~Book() {
-    AuthorNode* temp;
-    for(AuthorNode* current = head; current != nullptr; current = current ->next){
-        temp = current;
-        removeAuthor(current->a.getID());
-        current = temp;
+    int k = authorCount;
+    for(int i = 0; i < k; i++) {
+        removeAuthor(head->a.getID());
     }
-    authorCount = 0;
 }
 
 void Book::setName(const std::string bookName) {
@@ -92,7 +90,7 @@ bool Book::removeAuthor(const int id) {
         } else {
             for (AuthorNode *current = head; current != nullptr; current = current->next) {
                 if (current->a.getID() == id) {
-                    return index;
+                    break;
                 }
                 index++;
             }
@@ -115,8 +113,7 @@ bool Book::removeAuthor(const int id) {
 }
 
 bool Book::Book:: addAuthor(const int id, const string name){
-    AuthorNode* temp;
-    temp = findAuthor(id);
+    AuthorNode* temp = findAuthor(id);
     if (temp == nullptr){
         temp = new AuthorNode;
         temp->a.setName(name);
@@ -136,10 +133,27 @@ void Book::Book::displayAuthors() const {
     } else{
         for(AuthorNode* current = head; current != nullptr; current = current->next){
             if(current->a.getName() == ""){
-                cout<<"--EMPTY--"<< endl;
             } else{
-                cout<< "\tAuthor: " << current->a.getID() << ", " << "Author: " << current->a.getName() <<endl;
+                cout<< "\t" << current->a.getID() << ", " << current->a.getName() <<endl;
             }
         }
     }
+}
+
+string Book::hasAuthor(int id) const {
+    for(AuthorNode* current = head; current != nullptr; current = current->next){
+        if (current->a.getID() == id){
+            return this->getName();
+        }
+    }
+    return "";
+}
+
+string Book::findAuthorById(int authorID) {
+    for (AuthorNode *current = head; current != nullptr; current = current->next) {
+        if (current->a.getID() == authorID) {
+            return current->a.getName();
+        }
+    }
+    return "";
 }
