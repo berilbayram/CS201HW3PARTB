@@ -6,10 +6,10 @@
 #include "Book.h"
 using namespace std;
 
-Genre::Genre(const string name){
-    this->genreName = name;
-    bookCount = 0;
-    head = nullptr;
+Genre::Genre(const string gname){
+    this->genreName = gname;
+    this->bookCount = 0;
+    this->head = nullptr;
 }
 
 Genre::~Genre(){
@@ -74,7 +74,7 @@ Genre::Genre(const Genre &genreToCopy) {
     }
 }
 
-Genre:: BookNode* Genre::findBook(const string name) {
+Genre::BookNode* Genre::findBook(const string name){
     for(BookNode* current = head; current != nullptr; current = current->next){
         if (current->b.getName() == name || toUpperBookName(current->b.getName()) == toUpperBookName(name)){
             return current;
@@ -84,17 +84,18 @@ Genre:: BookNode* Genre::findBook(const string name) {
 }
 
 bool Genre::addBook(const string bName) {
-    BookNode* temp = nullptr;
-    temp = findBook(bName);
-    if (temp == nullptr){
-        temp = new BookNode;
-        temp->b.setName(bName);
-        temp->next = head;
-        head = temp;
+    BookNode* temp = findBook(bName);
+    if (findBook(bName) == nullptr){
+        BookNode* node = new BookNode;
+        node->b.setName(bName);
+        node->next = head;
+        head = node;
         bookCount++;
+        delete temp;
         return true;
     }
     cout << "ERROR: This book("<< bName <<") exists!" << endl;
+    delete temp;
     return false;
 }
 
@@ -127,14 +128,14 @@ bool Genre::removeBook(const std::string bName) {
         delete temp;
         return true;
     }
-    cout << "This book does not exist!" << endl;
+    cout << "ERROR: This book ("<< bName << ") does not exist!" << endl;
     return false;
 }
 
 bool Genre::addAuthor(const int aId, const string aName, const string bookName) {
     BookNode* temp = findBook(bookName);
     if ( temp == nullptr ){
-        cout << "This book does not exist!" << endl;
+        cout << "ERROR: This book ("<< bookName << ") does not exist!" << endl;
         return false;
     } else {
         bool isAdded = temp->b.addAuthor(aId,aName);
@@ -157,7 +158,7 @@ bool Genre::removeAuthor(const int aId, const string bookName) {
             return false;
         }
     } else {
-        cout<<"This book does not exist!"<<endl;
+        cout << "ERROR: This book ("<< bookName << ") does not exist!" << endl;
         return false;
     }
 }

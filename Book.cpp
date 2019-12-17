@@ -7,6 +7,9 @@
 using namespace std;
 
 Book::Book(){
+    head = nullptr;
+    name = "";
+    authorCount = 0;
 }
 
 Book::Book(const string name){
@@ -80,7 +83,8 @@ Book:: AuthorNode* Book::findAuthor(int id) {
 }
 
 bool Book::removeAuthor(const int id) {
-    AuthorNode* temp = findAuthor(id);
+    AuthorNode* temp = nullptr;
+    temp = findAuthor(id);
     int index = 0;
     if(temp != nullptr) {
         if (temp == head) {
@@ -108,7 +112,7 @@ bool Book::removeAuthor(const int id) {
         delete temp;
         return true;
     }
-    cout << "Error: This author does not exist!" << endl;
+    cout << "ERROR: This author (" << id <<") does not exist!" << endl;
     return false;
 }
 

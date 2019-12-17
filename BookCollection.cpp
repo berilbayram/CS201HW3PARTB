@@ -66,7 +66,7 @@ void BookCollection::addBook(std::string genreName, std::string bookName) {
     if (temp != nullptr){
         temp->g.addBook(bookName);
     }else{
-        cout<<"Genre does not exist"<<endl;
+        cout<<"ERROR: Genre (" << genreName <<  ") does not exist"<<endl;
     }
 }
 
@@ -75,7 +75,7 @@ void BookCollection::removeBook(std::string genreName, std::string bookName) {
     if(temp != nullptr){
         temp->g.removeBook(bookName);
     } else{
-        cout<<"Genre does not exist"<<endl;
+        cout<<"ERROR: Genre (" << genreName <<  ") does not exist"<<endl;
     }
 }
 
@@ -84,7 +84,7 @@ void BookCollection::BookCollection::removeAuthor(std::string genreName, std::st
     if(temp != nullptr){
         temp->g.removeAuthor(authorID,bookName);
     } else{
-        cout<<"Genre does not exist"<<endl;
+        cout<<"ERROR: Genre (" << genreName <<  ") does not exist"<<endl;
     }
 }
 
@@ -93,7 +93,7 @@ void BookCollection::BookCollection::addAuthor(std::string genreName, std::strin
     if(temp != nullptr){
         temp->g.addAuthor(authorID,authorName, bookName);
     } else{
-        cout<<"Genre does not exist"<<endl;
+        cout<<"ERROR: Genre (" << genreName <<  ") does not exist"<<endl;
     }
 }
 
@@ -135,7 +135,7 @@ void BookCollection::BookCollection::removeGenre(std::string genreName) {
         temp->next = nullptr;
         delete temp;
     } else {
-        cout << "This genre does not exist!" << endl;
+        cout<<"ERROR: Genre (" << genreName <<  ") does not exist"<<endl;
     }
 }
 
