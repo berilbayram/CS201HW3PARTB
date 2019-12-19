@@ -39,13 +39,13 @@ int Book::getAuthorCount() const {
 
 void Book::operator=(const class Book & right) {
     authorCount = right.authorCount;
+    this->name = right.name;
     if (right.head == nullptr){
         head = nullptr;
     } else {
         head = new AuthorNode;
         head->a = right.head->a;
         AuthorNode* newPtr = head;
-
         for(AuthorNode* authorPtr = right.head->next; authorPtr != nullptr; authorPtr = authorPtr->next){
             newPtr->next = new AuthorNode;
             newPtr = newPtr->next;
@@ -57,6 +57,7 @@ void Book::operator=(const class Book & right) {
 
 Book::Book(const Book &bookToCopy) {
     authorCount = bookToCopy.authorCount;
+    this->name = bookToCopy.name;
     if (bookToCopy.head == nullptr){
         head = nullptr;
     } else {

@@ -41,5 +41,14 @@ int main(){
     cout << "c9" << endl;
     bookCollection.addAuthor("Fantasy", "Quran", 85, "Alp");
     bookCollection.displayAuthor(85);
+    cout << "c10" << endl;
+    bookCollection.displayGenre("Romantic");
+    BookCollection bookCollection1 = BookCollection();
+    bookCollection1 = bookCollection;
+    cout<<"c11"<< endl;
+    bookCollection1.displayGenre("Romantic");
+    BookCollection bookCollection2 = bookCollection;
+    cout<<"c12"<< endl;
+    bookCollection2.displayGenre("Romantic");
     return 0;
 }

@@ -40,6 +40,7 @@ string toUpperBookName(string str) {
 
 void Genre::operator=(const class Genre & right) {
     bookCount = right.bookCount;
+    this->genreName = right.genreName;
     if (right.head == nullptr){
         head = nullptr;
     } else{
@@ -58,6 +59,7 @@ void Genre::operator=(const class Genre & right) {
 
 Genre::Genre(const Genre &genreToCopy) {
     bookCount = genreToCopy.bookCount;
+    this->genreName = genreToCopy.genreName;
     if (genreToCopy.head == nullptr){
         head = nullptr;
     } else{
