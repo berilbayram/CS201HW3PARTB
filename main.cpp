@@ -50,5 +50,8 @@ int main(){
     BookCollection bookCollection2 = bookCollection;
     cout<<"c12"<< endl;
     bookCollection2.displayGenre("Romantic");
+    bookCollection2.removeBook("Romantic", "Love is a Bike" );
+    bookCollection2.displayGenre("Romantic");
+
     return 0;
 }

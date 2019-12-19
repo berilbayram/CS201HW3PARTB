@@ -190,12 +190,16 @@ void Genre::displayBooks(int authorId) const {
 }
 
 string Genre::findAuthorById(int authorID) const {
-    string authorName;
-    for(BookNode* current = head; current != nullptr; current = current->next){
+    string authorName = "";
+    BookNode* current = head;
+    while(current != nullptr){
         authorName = current->b.findAuthorById(authorID);
-        if(authorName != "")
+        if(authorName != ""){
             return authorName;
+        }
+         current = current->next;
+
     }
-    return "";
+    return authorName;
 }
 

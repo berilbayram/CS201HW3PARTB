@@ -155,10 +155,12 @@ string Book::hasAuthor(int id) const {
 }
 
 string Book::findAuthorById(int authorID) {
-    for (AuthorNode *current = head; current != nullptr; current = current->next) {
+    AuthorNode* current = head;
+    while (current != nullptr){
         if (current->a.getID() == authorID) {
             return current->a.getName();
         }
+        current = current->next;
     }
     return "";
 }
